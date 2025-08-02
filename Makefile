@@ -15,11 +15,12 @@ START_OBJ = $(START_SRC:%.s=%.o)
 INTERFACE_CFG=/usr/share/openocd/scripts/interface/stlink.cfg
 TARGET_CFG=/usr/share/openocd/scripts/target/stm32f1x.cfg
 
+DEBUG_PORT=3333
+
 all: $(TARGET)
 
 $(TARGET): $(START_OBJ) $(C_OBJ)
 	$(CC) $(CPUFLAGS) $(LDFLAGS) $(START_OBJ) $(C_OBJ) -o $(TARGET).elf
-	$(OBJCOPY) $(TARGET).elf $(TARGET).bin
 	$(OBJCOPY) $(TARGET).elf -Oihex $(TARGET).hex
 
 %.o: %.c
@@ -32,4 +33,7 @@ clean:
 	$(RM) $(shell find ./ -name '*.o') $(TARGET).*
 
 download:
-	openocd -f $(INTERFACE_CFG) -f $(TARGET_CFG) -c init -c halt -c "flash write_image erase $(PWD)/$(TARGET).bin" -c reset -c shutdown
+	openocd -f $(INTERFACE_CFG) -f $(TARGET_CFG) -c init -c halt -c "flash write_image erase $(PWD)/$(TARGET).elf" -c reset -c shutdown
+
+debug:
+	openocd -f $(INTERFACE_CFG) -f $(TARGET_CFG) -c "gdb_port $(DEBUG_PORT); init; halt;"

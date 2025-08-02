@@ -1,6 +1,9 @@
 #include "stm32f10x.h"
-#include <stm32f10x_rcc.h>
-#include <stm32f10x_gpio.h>
+#include "stm32f10x_conf.h"
+
+void delay() {
+   for (volatile int i = 0 ; i < 1000000 ; i ++); 
+}
 
 int main(void) {
     // 使能 GPIOB 时钟
@@ -14,10 +17,13 @@ int main(void) {
     GPIO_Init(GPIOC, &gpio);
 
     // 点亮 LED（PB9 输出高电平）
-    GPIO_ResetBits(GPIOC, GPIO_Pin_13);
     // 或者：GPIO_WriteBit(GPIOB, GPIO_Pin_9, SET);
 
     while (1) {
+        GPIO_ResetBits(GPIOC, GPIO_Pin_13);
+        delay();
         // LED始终点亮
+        GPIO_SetBits(GPIOC, GPIO_Pin_13);
+        delay();
     }
 }

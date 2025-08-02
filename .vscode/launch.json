@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug STM32 (Cortex-Debug)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "external",
+            "executable": "${workspaceFolder}/main.elf",
+            "cwd": "${workspaceFolder}",
+            "gdbPath": "gdb-multiarch",
+            "device": "STM32F103",   // 可选，帮助识别寄存器
+            "runToEntryPoint": "main",
+            "serverpath": "",
+            "svdFile": "",           // 可选，寄存器映射
+            "postLaunchCommands": [
+                "monitor reset halt"
+            ],
+            "request": "launch",
+            "connectMode": "existing",
+            "gdbTarget": "localhost:3333"
+        }
+    ]
+}
+    

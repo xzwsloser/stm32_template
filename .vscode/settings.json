@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "stdio.h": "c",
-        "stm32f10x.h": "c"
+        "stm32f10x.h": "c",
+        "stm32f10x_dac.h": "c"
     }
 }
